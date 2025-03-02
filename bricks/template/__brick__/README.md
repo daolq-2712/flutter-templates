@@ -4,7 +4,7 @@
 
 ## Prerequisite
 
-- Flutter 3.10.5
+- Flutter 3.29.0
 - Flutter version manager (recommend): [fvm](https://fvm.app/)
 
 ## Getting Started

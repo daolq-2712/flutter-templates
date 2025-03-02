@@ -26,8 +26,8 @@ All the templates can be used to kick off a new Flutter project quickly.
 
 Before using the template, ensure that you have installed the following prerequisites on your system:
 
-- Flutter 3.10.5
-- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.0-dev.44
+- Flutter 3.29.0
+- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.1
 
 ### Set up a new project
 
