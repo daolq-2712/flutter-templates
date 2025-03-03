@@ -1,67 +1,59 @@
-# Flutter Templates
+# I U P A C Reader
 
-All the templates can be used to kick off a new Flutter project quickly.
+[![codecov](https://codecov.io/gh/nimblehq/iupac-reader/branch/main/graph/badge.svg?token=ATUNXDX218)](https://codecov.io/gh/nimblehq/iupac-reader)
 
-## Features
-
-- Supports __Android__ and __iOS__ platforms *(Web and Desktop are not yet supported)*.
-- [__Clean Architecture__](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) with `MVVM` and pre-built foundational components.
-- [Pre-set environments](bricks/template/__brick__#setup): `Staging` and `Production`. Environment variables are supplied through `.env` files through [flutter_config](https://pub.dev/packages/flutter_config).
-- Dependency Injection (DI), State Management, and Navigating with [get_it](https://pub.dev/packages/get_it), [flutter_riverpod](https://pub.dev/packages/flutter_riverpod), and [go_router](https://pub.dev/packages/go_router).
-- Networking with [dio](https://pub.dev/packages/dio) and [retrofit](https://pub.dev/packages/retrofit), JSON serializing with [json_serializable](https://pub.dev/packages/json_serializable).
-- Integrated local [secure storage](https://pub.dev/packages/flutter_secure_storage).
-- [Localization](https://docs.flutter.dev/accessibility-and-localization/internationalization) integrated in [3 initial languages](bricks/template/__brick__/lib/l10n).
-- [Testing](https://docs.flutter.dev/testing)-ready (unit, integration, and widget testing), [production and deployment](https://docs.flutter.dev/deployment)-ready (to Firebase, Play Store, TestFlight, and AppStore).
-- Built-in [GitHub templates & CI/CD workflows](bricks/template/__brick__/.github) integrated with GitHub Actions to perform static code analysis, test, build and deploy app builds to app distribution services or app stores.
-
-### Optional (enable by [generator command parameters](#set-up-a-new-project))
-
-- Specify the default [JSON field renaming format with json_serializable](https://pub.dev/packages/json_serializable#build-configuration) between support values: none, kebab, snake, and pascal.
-- Integrate permissions requesting & checking with [permission_handler](https://pub.dev/packages/permission_handler) and its necessary basic setup.
-- [Code coverage integration](bricks/template/__brick__/codecov.yml) by `Codecov`.
-
-## Use the template
-
-### Prerequisites
-
-Before using the template, ensure that you have installed the following prerequisites on your system:
+## Prerequisite
 
 - Flutter 3.29.0
-- [Mason CLI](https://pub.dev/packages/mason_cli) 0.1.1
+- Flutter version manager (recommend): [fvm](https://fvm.app/)
 
-### Set up a new project
+## Getting Started
 
-Follow these steps to set up a new project from the template:
+### Setup
 
-1. Use [Use this template](https://github.com/new?template_name=flutter-templates&template_owner=nimblehq) feature to create your new project repository or clone this template repository to your local machine.
+- Create these `.env` files in the root directory according to the flavors and add the required
+environment variables. The example file is `.env.sample`.
 
-2. Fetch all required bricks by running the command:
+  - Staging: `.env.staging`
 
-    `$ mason get`
+  - Production: `.env`
 
-3. Generate the new project by running the following command with [supported arguments](bricks/template/brick.yaml):
+- To make the Android release build,
 
-    `$ mason make template` and then provide necessary inputs.
+  - put the `release.keystore` at the `android/config` folder,
 
-    or
+  - create the `signing.properties` file to provide keystore credentials in the `android` folder. The example file is `signing.properties.sample`.
 
-    `$ mason make template -c mason-config.json` to provide necessary inputs via a JSON file, e.g., [mason-config.json](mason-config.json) for the sample project.
+### Run
 
-Once the project is generated, please refer to the [Getting Started](bricks/template/__brick__#getting-started) documentation to make it ready for development.
+- Run code generator for JSON models, DI dependencies, etc:
 
-That's it! You have now set up a new Flutter project using the template 🎉
+  - `$ fvm flutter packages pub run build_runner build --delete-conflicting-outputs`
 
-> **Note**
->
-> The script generates all project files to the current working folder as default and cleans up all template stuff in the end. Run it with [Custom Output Directory](https://github.com/felangel/mason/tree/master/packages/mason_cli#custom-output-directory) to set a custom output folder and keep the template stuff to rerun.
->
-> `$ mason make template -c mason-config.json -o my_flutter_project`
->
-> You can find detailed information on `make` command options and usage in the [Mason documentation](https://github.com/felangel/mason/tree/master/packages/mason_cli#overview).
+- Run the app with the desired app flavor:
 
-## Documentation
+  - `$ fvm flutter run --flavor staging`
+  - `$ fvm flutter run --flavor production`
 
-Check out the [Wiki](https://github.com/nimblehq/flutter-templates/wiki) page to access the complete documentation.
+- Check code formatting & static code analyzing:
+
+  - `$ dart format --set-exit-if-changed .`
+  - `$ fvm flutter analyze .`
+
+### Test
+
+- Run unit testing:
+
+  - `$ fvm flutter test`
+  - `$ fvm flutter test --machine --coverage`
+
+- Run integration testing:
+
+  - `$ fvm flutter drive --driver=test_driver/integration_test.dart --target=integration_test/{test_file}.dart --flavor staging`
+
+  - For example:
+
+    `$ fvm flutter drive --driver=test_driver/integration_test.dart --target=integration_test/my_home_page_test.dart --flavor staging`
 
 ## License
 

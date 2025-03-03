@@ -27,12 +27,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.29.0'
 
-      - name: Generate new project
-        run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json
-
       - name: Get Flutter dependencies
         run: flutter pub get
 
@@ -56,14 +50,12 @@ jobs:
       - name: Build Production App Bundle
         run: flutter build appbundle --flavor production --release --build-number $GITHUB_RUN_NUMBER
 
-      # TODO We will enable this step later when having a shared Service Account on our organization
-      # Basically, this step will work properly after providing a valid Service Account.
-      # - name: Upload Android Production Release bundle to Play Store
-      #   uses: r0adkll/upload-google-play@v1
-      #   with:
-      #     serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-      #     packageName: co.nimblehq.flutter.template
-      #     releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
-      #     track: internal
-      #     userFraction: 1.0
-      #     whatsNewDirectory: .github/workflows/whatsnew
+      - name: Upload Android Production Release bundle to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: co.sun.iupac.reader
+          releaseFile: build/app/outputs/bundle/productionRelease/app-production-release.aab
+          track: internal
+          userFraction: 1.0
+          whatsNewDirectory: .github/workflows/whatsnew

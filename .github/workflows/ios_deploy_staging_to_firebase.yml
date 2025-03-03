@@ -37,12 +37,6 @@ jobs:
           channel: 'stable'
           flutter-version: '3.29.0'
 
-      - name: Generate new project
-        run: |
-          dart pub global activate mason_cli
-          mason get
-          mason make template -c mason-config.json
-
       - name: Get Flutter dependencies
         run: flutter pub get
 
@@ -86,6 +80,6 @@ jobs:
 
       - name: Deploy to Firebase
         env:
-          RELEASE_NOTE_CONTENT: ${{ steps.changelog.outputs.changelog }}
+          RELEASE_NOTE_CONTENT:${{ steps.changelog.outputs.changelog }}
         run: |
           cd ./ios && bundle exec fastlane build_and_upload_staging_app
